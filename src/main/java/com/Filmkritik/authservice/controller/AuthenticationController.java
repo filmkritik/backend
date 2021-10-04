@@ -1,5 +1,6 @@
 package com.Filmkritik.authservice.controller;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.security.auth.message.AuthException;
@@ -18,11 +19,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Filmkritik.authservice.dto.JwtTokenRequest;
@@ -30,8 +35,10 @@ import com.Filmkritik.authservice.dto.JwtTokenResponse;
 import com.Filmkritik.authservice.dto.TokenRefreshRequest;
 import com.Filmkritik.authservice.dto.UserDto;
 import com.Filmkritik.authservice.entities.RefreshTokenEntity;
+import com.Filmkritik.authservice.entities.SecurityQuestionsEntity;
 import com.Filmkritik.authservice.exception.AuthenticationException;
 import com.Filmkritik.authservice.exception.TokenRefreshException;
+import com.Filmkritik.authservice.repository.SecurityQuestionsRepository;
 import com.Filmkritik.authservice.service.AuthService;
 import com.Filmkritik.authservice.service.JwtUserDetailsService;
 import com.Filmkritik.authservice.utilities.JwtTokenUtil;
@@ -58,7 +65,7 @@ public class AuthenticationController {
 	@Autowired
 	private AuthService authService;
 
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	@PostMapping(value = "/authenticate")
 	public ResponseEntity<JwtTokenResponse> createAuthenticationToken(
 			@RequestBody JwtTokenRequest authenticationRequest) throws Exception {
 
@@ -77,14 +84,29 @@ public class AuthenticationController {
 
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@PostMapping(value = "/register")
 	public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
 		logger.info("Requested to register user: " + user.getUsername());
 		return ResponseEntity.ok(userDetailsService.save(user));
 	}
+	
+	@PostMapping(value = "/forgot/verifyUser")
+	public  ResponseEntity<?> verifyUser(@RequestParam String username) throws UsernameNotFoundException{	
+		return ResponseEntity.ok(userDetailsService.getUserIdbyUsername(username));
+	}
+	
+	@GetMapping(value = "/user/securityQuestions")
+	public Map<String, String> getSQbyUserId(@RequestParam long userId){
+		return  userDetailsService.getSQbyUserId(userId);
+	}
+	
+	@PostMapping(value = "/forgot/securityCode")
+	public  ResponseEntity<String> sendSecurityCode(@RequestParam long userId){	
+		return ResponseEntity.ok(userDetailsService.sendSecurityCode(userId));
+	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	@RequestMapping(value = "/refresh", method = RequestMethod.GET)
+	@PostMapping(value = "/refresh")
 	public ResponseEntity<JwtTokenResponse> refreshAndGetAuthenticationToken(@RequestBody TokenRefreshRequest request) {
 		logger.info(
 				"Requested to refresh JWT token for User :" + jwtTokenUtil.getUsernameFromToken(request.getToken()));
