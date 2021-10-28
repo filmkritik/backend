@@ -94,7 +94,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 		List<UserSecQuestMappingEntity> questions = userSecQuestMappingRepository.getByUserId(userId);
 		questions.forEach((quest)->{
 			
-			SQA.put(securityQuestionsRepo.findById(quest.getSQ_id()).getQuestions(), quest.getAnswer());
+			SQA.put(securityQuestionsRepo.findById(quest.getSQ_id()).getQuestion(), quest.getAnswer());
 		});
 		return SQA;
 	}

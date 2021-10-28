@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "MST_SecurityQuestions")
+@Table(name = "MST_Secques")
 public class SecurityQuestionsEntity {
 
 	@Id
@@ -16,7 +16,7 @@ public class SecurityQuestionsEntity {
 	private long id;
 	
 	@Column
-	private String Questions;
+	private String Question;
 
 	/**
 	 * @return the id
@@ -35,15 +35,15 @@ public class SecurityQuestionsEntity {
 	/**
 	 * @return the questions
 	 */
-	public String getQuestions() {
-		return Questions;
+	public String getQuestion() {
+		return Question;
 	}
 
 	/**
 	 * @param questions the questions to set
 	 */
-	public void setQuestions(String questions) {
-		Questions = questions;
+	public void setQuestion(String question) {
+		Question = question;
 	}
 
 	

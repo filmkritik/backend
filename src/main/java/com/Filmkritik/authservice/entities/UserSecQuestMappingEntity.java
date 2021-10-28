@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "UserSecurityQuestionMapping")
+@Table(name = "UserSecquesMap")
 public class UserSecQuestMappingEntity {
 
 	@Id
@@ -16,10 +16,10 @@ public class UserSecQuestMappingEntity {
 	private long id;
 	
 	@Column
-	private long user_id;
+	private long uid;
 	
 	@Column
-	private long SQ_id;
+	private long sid;
 	
 	@Column
 	private String Answer;
@@ -40,25 +40,25 @@ public class UserSecQuestMappingEntity {
 	 * @return the user_id
 	 */
 	public long getUser_id() {
-		return user_id;
+		return uid;
 	}
 	/**
 	 * @param user_id the user_id to set
 	 */
 	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+		this.uid = user_id;
 	}
 	/**
 	 * @return the sQ_id
 	 */
 	public long getSQ_id() {
-		return SQ_id;
+		return sid;
 	}
 	/**
 	 * @param sQ_id the sQ_id to set
 	 */
 	public void setSQ_id(long sQ_id) {
-		SQ_id = sQ_id;
+		sid = sQ_id;
 	}
 	/**
 	 * @return the answer
