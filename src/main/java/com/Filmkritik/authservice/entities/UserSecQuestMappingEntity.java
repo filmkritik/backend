@@ -23,55 +23,63 @@ public class UserSecQuestMappingEntity {
 	
 	@Column
 	private String Answer;
-	
+
 	/**
 	 * @return the id
 	 */
 	public long getId() {
 		return id;
 	}
+
 	/**
 	 * @param id the id to set
 	 */
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	/**
-	 * @return the user_id
+	 * @return the uid
 	 */
-	public long getUser_id() {
+	public long getUid() {
 		return uid;
 	}
+
 	/**
-	 * @param user_id the user_id to set
+	 * @param uid the uid to set
 	 */
-	public void setUser_id(long user_id) {
-		this.uid = user_id;
+	public void setUid(long uid) {
+		this.uid = uid;
 	}
+
 	/**
-	 * @return the sQ_id
+	 * @return the sid
 	 */
-	public long getSQ_id() {
+	public long getSid() {
 		return sid;
 	}
+
 	/**
-	 * @param sQ_id the sQ_id to set
+	 * @param sid the sid to set
 	 */
-	public void setSQ_id(long sQ_id) {
-		sid = sQ_id;
+	public void setSid(long sid) {
+		this.sid = sid;
 	}
+
 	/**
 	 * @return the answer
 	 */
 	public String getAnswer() {
 		return Answer;
 	}
+
 	/**
 	 * @param answer the answer to set
 	 */
 	public void setAnswer(String answer) {
 		Answer = answer;
 	}
+
 	
 	
 }

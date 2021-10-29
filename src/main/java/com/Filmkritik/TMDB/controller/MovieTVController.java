@@ -10,6 +10,7 @@ import com.Filmkritik.TMDB.services.MovieService;
 import com.Filmkritik.TMDB.services.TvService;
 import com.Filmkritik.authservice.controller.AuthenticationController;
 import com.omertron.themoviedbapi.MovieDbException;
+import com.omertron.themoviedbapi.model.Genre;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.model.tv.TVInfo;
 import com.omertron.themoviedbapi.results.ResultList;
@@ -60,5 +61,9 @@ public class MovieTVController {
 	@GetMapping(value="/tv/airingToday")
 	public ResultList<TVInfo> getTVAiringToday() throws MovieDbException{
 		return tvService.getTVAiringToday();
+	}
+	@GetMapping(value="/getGenre")
+	public ResultList<Genre> getGenre() throws MovieDbException{
+		return movieService.getGenre();
 	}
 }

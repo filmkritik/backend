@@ -6,34 +6,28 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "MST_User")
+@Table(name = "user")
 public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column
+	@Column(name = "email")
 	private String username;
+	
 	@Column
 	@JsonIgnore
 	private String password;
 
-	@OneToOne(mappedBy = "userEntity")
-	private RefreshTokenEntity refreshTokenEntity;
-
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "MAP_User_Role", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
-			@JoinColumn(name = "ROLE_ID") })
-	private Set<RolesEntity> roles;
-
-	public Set<RolesEntity> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<RolesEntity> roles) {
-		this.roles = roles;
-	}
-
+	@Column(name="Firstname")
+	private String firstname;
+	
+	@Column(name="Lastname")
+	private String lastname;
+	
+	@Column
+	private String phoneno;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -56,6 +50,48 @@ public class UserEntity {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the firstname
+	 */
+	public String getFirstname() {
+		return firstname;
+	}
+
+	/**
+	 * @param firstname the firstname to set
+	 */
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	/**
+	 * @return the lastname
+	 */
+	public String getLastname() {
+		return lastname;
+	}
+
+	/**
+	 * @param lastname the lastname to set
+	 */
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	/**
+	 * @return the phoneno
+	 */
+	public String getPhoneno() {
+		return phoneno;
+	}
+
+	/**
+	 * @param phoneno the phoneno to set
+	 */
+	public void setPhoneno(String phoneno) {
+		this.phoneno = phoneno;
 	}
 
 }

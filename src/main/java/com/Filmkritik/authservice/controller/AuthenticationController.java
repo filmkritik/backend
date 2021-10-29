@@ -1,5 +1,6 @@
 package com.Filmkritik.authservice.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -58,6 +59,9 @@ public class AuthenticationController {
 
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
+	
+	@Autowired
+	private SecurityQuestionsRepository securityQuestionsRepository;
 
 	@Value("${jwt.http.request.header}")
 	private String tokenHeader;
@@ -86,7 +90,7 @@ public class AuthenticationController {
 
 	@PostMapping(value = "/register")
 	public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
-		logger.info("Requested to register user: " + user.getUsername());
+		logger.info("Requested to register user: " + user.getEmail());
 		return ResponseEntity.ok(userDetailsService.save(user));
 	}
 	
@@ -100,12 +104,17 @@ public class AuthenticationController {
 		return  userDetailsService.getSQbyUserId(userId);
 	}
 	
+	@GetMapping(value = "/getAllSecurityQuestions")
+	public List<SecurityQuestionsEntity> getSecurityQuestions(){
+		return  securityQuestionsRepository.findAll();
+	}
+	
 	@PostMapping(value = "/forgot/securityCode")
 	public  ResponseEntity<String> sendSecurityCode(@RequestParam long userId){	
 		return ResponseEntity.ok(userDetailsService.sendSecurityCode(userId));
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+
 	@PostMapping(value = "/refresh")
 	public ResponseEntity<JwtTokenResponse> refreshAndGetAuthenticationToken(@RequestBody TokenRefreshRequest request) {
 		logger.info(

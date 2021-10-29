@@ -15,7 +15,7 @@ public class SecurityQuestionsEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column
+	@Column(name="question")
 	private String Question;
 
 	/**

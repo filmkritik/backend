@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.Filmkritik.authservice.service.AuthService;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.TheMovieDbApi;
+import com.omertron.themoviedbapi.model.Genre;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
 
@@ -31,6 +32,11 @@ public class MovieService {
 	
 	public ResultList<MovieInfo> getNowShowing() throws MovieDbException{
 		return movieDB.getNowPlayingMovies(1, "en-US");
+	}
+
+	public ResultList<Genre> getGenre() throws MovieDbException {
+		// TODO Auto-generated method stub
+		return movieDB.getGenreMovieList("en-US");
 	}
 
 }

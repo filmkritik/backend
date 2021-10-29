@@ -58,27 +58,43 @@ public class JwtUserDetailsService implements UserDetailsService {
 			logger.error("User not found with username");
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-				getAuthority(user));
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), null);
+//				getAuthority(user));
 	}
 
 
-	private Set<SimpleGrantedAuthority> getAuthority(UserEntity user) {
-        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-		user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
-		});
-		return authorities;
-	}
+//	private Set<SimpleGrantedAuthority> getAuthority(UserEntity user) {
+//        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+//		user.getRoles().forEach(role -> {
+//            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN" ));
+//		});
+//		return authorities;
+//	}
 	
 	public String save(UserDto user) {
 		UserEntity newUser = new UserEntity();
-		newUser.setUsername(user.getUsername());
+		newUser.setFirstname(user.getFirstname());
+		newUser.setLastname(user.getLastname());
+		newUser.setPhoneno(user.getPhonenumber());
+		newUser.setUsername(user.getEmail());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-		userRepo.save(newUser);
+		UserEntity savedUser = userRepo.save(newUser);
+		saveSecurityQ_AByUser(savedUser.getId(),user.getSQ_A());
 		return "Success";
 	}
 	
+	private void saveSecurityQ_AByUser(long userid, Map<Integer, String> sq_A) {
+		sq_A.forEach((qid,answer)->{
+			UserSecQuestMappingEntity newQA = new UserSecQuestMappingEntity();
+			newQA.setUid(userid);
+			newQA.setSid(qid);
+			newQA.setAnswer(answer);
+			userSecQuestMappingRepository.save(newQA);
+		});;
+		
+	}
+
+
 	public Optional<UserEntity> findByUserId(Long id) {
 		return userRepo.findById(id);
 	}
@@ -94,7 +110,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 		List<UserSecQuestMappingEntity> questions = userSecQuestMappingRepository.getByUserId(userId);
 		questions.forEach((quest)->{
 			
-			SQA.put(securityQuestionsRepo.findById(quest.getSQ_id()).getQuestion(), quest.getAnswer());
+			SQA.put(securityQuestionsRepo.findById(quest.getSid()).getQuestion(), quest.getAnswer());
 		});
 		return SQA;
 	}
