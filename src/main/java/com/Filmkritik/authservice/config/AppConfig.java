@@ -36,10 +36,9 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private JwtOncePerRequestFilter jwtOncePerRequestFilter;
-	
+
 	@Value("${moviedb.api.key}")
 	private String API_KEY;
-
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -66,30 +65,34 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable().exceptionHandling()
 				.authenticationEntryPoint(jwtUnAuthorizedResponseAuthenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/authenticate", "/register","/forgot/securityCode","/movie/topRatedMovies","/movie/popularMovies", "/movie/upcomingMovies","/movie/nowShowing","/swagger-ui/**", "/v3/api-docs/**", "/user/securityQuestions/**", "/getGenre","/getAllSecurityQuestions").permitAll().anyRequest().authenticated();
+				.antMatchers("/authenticate", "/register", "/forgot/securityCode", "/movie/topRatedMovies",
+						"/movie/popularMovies", "/tv/topRatedTV", "/tv/popularTV", "/tv/airingToday",
+						"/movie/upcomingMovies", "/movie/nowShowing", "/swagger-ui/**", "/v3/api-docs/**",
+						"/user/securityQuestions/**")
+				.permitAll().anyRequest().authenticated();
 
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtOncePerRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
-	
+
 	@Bean
 	public JavaMailSender getJavaMailSender() {
-	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-	    mailSender.setHost("smtp.gmail.com");
-	    mailSender.setPort(587);
-	    
-	    mailSender.setUsername("filmkritik.se@gmail.com");
-	    mailSender.setPassword("sijvddqvkajbbtvi");
-	    
-	    Properties props = mailSender.getJavaMailProperties();
-	    props.put("mail.transport.protocol", "smtp");
-	    props.put("mail.smtp.auth", "true");
-	    props.put("mail.smtp.starttls.enable", "true");
-	    props.put("mail.debug", "true");
-	    
-	    return mailSender;
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+		mailSender.setHost("smtp.gmail.com");
+		mailSender.setPort(587);
+
+		mailSender.setUsername("filmkritik.se@gmail.com");
+		mailSender.setPassword("sijvddqvkajbbtvi");
+
+		Properties props = mailSender.getJavaMailProperties();
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.debug", "true");
+
+		return mailSender;
 	}
-	
+
 	@Bean
 	public TheMovieDbApi movieDB() throws MovieDbException {
 		TheMovieDbApi api = new TheMovieDbApi(API_KEY);
