@@ -66,7 +66,7 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable().exceptionHandling()
 				.authenticationEntryPoint(jwtUnAuthorizedResponseAuthenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/authenticate", "/register","/forgot/securityCode","/movie/topRatedMovies","/movie/popularMovies", "/movie/upcomingMovies","/movie/nowShowing","/swagger-ui/**", "/v3/api-docs/**", "/user/securityQuestions/**").permitAll().anyRequest().authenticated();
+				.antMatchers("/authenticate", "/register","/forgot/securityCode","/movie/topRatedMovies","/movie/popularMovies","/tv/topRatedTV","/tv/popularTV","/tv/airingToday","/movie/upcomingMovies","/movie/nowShowing","/swagger-ui/**", "/v3/api-docs/**", "/user/securityQuestions/**").permitAll().anyRequest().authenticated();
 
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtOncePerRequestFilter, UsernamePasswordAuthenticationFilter.class);
