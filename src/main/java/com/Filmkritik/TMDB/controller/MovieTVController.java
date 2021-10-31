@@ -62,6 +62,12 @@ public class MovieTVController {
 	public ResultList<TVInfo> getTVAiringToday() throws MovieDbException{
 		return tvService.getTVAiringToday();
 	}
+	
+	@GetMapping(value="/tv/onTheAir")
+	public ResultList<TVInfo> getOnTheAir() throws MovieDbException{
+		return tvService.getOnTheAir();
+	}
+	
 	@GetMapping(value="/getGenre")
 	public ResultList<Genre> getGenre() throws MovieDbException{
 		return movieService.getGenre();

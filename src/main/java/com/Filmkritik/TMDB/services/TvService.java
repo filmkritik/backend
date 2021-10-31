@@ -31,4 +31,8 @@ public class TvService {
 	public ResultList<TVInfo> getTVAiringToday() throws MovieDbException{
 		return movieDB.getTVAiringToday(1, "en-US", null);
 	}
+	
+	public ResultList<TVInfo> getOnTheAir() throws MovieDbException{
+		return movieDB.getTVOnTheAir(1, "en-US");
+	}
 }
