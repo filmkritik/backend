@@ -68,7 +68,7 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/authenticate", "/register", "/forgot/securityCode", "/movie/topRatedMovies",
 						"/movie/popularMovies", "/tv/topRatedTV", "/tv/popularTV", "/tv/airingToday",
 						"/movie/upcomingMovies", "/movie/nowShowing", "/swagger-ui/**", "/v3/api-docs/**",
-						"/user/securityQuestions/**,/forgot/**,/forgot/updatePassword/**")
+						"/user/securityQuestions/**,/forgot/updatePassword")
 				.permitAll().anyRequest().authenticated();
 
 		// Add a filter to validate the tokens with every request

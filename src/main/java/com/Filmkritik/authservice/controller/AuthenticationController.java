@@ -115,7 +115,7 @@ public class AuthenticationController {
 	}
 
 	@PostMapping(value = "/forgot/updatePassword")
-	public  ResponseEntity<String> sendSecurityCode(@RequestParam long userId,@RequestParam String password ){	
+	public  ResponseEntity<String> updatePassword(@RequestParam long userId,@RequestParam String password ){	
 		return ResponseEntity.ok(userDetailsService.updatePassword(userId,password));
 	}
 
