@@ -68,7 +68,7 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/authenticate", "/register", "/forgot/securityCode", "/movie/topRatedMovies",
 						"/movie/popularMovies", "/tv/topRatedTV", "/tv/popularTV", "/tv/airingToday",
 						"/movie/upcomingMovies", "/movie/nowShowing", "/swagger-ui/**", "/v3/api-docs/**",
-						"/user/securityQuestions/**")
+						"/user/securityQuestions/**,/forgot/**,/forgot/updatePassword/**")
 				.permitAll().anyRequest().authenticated();
 
 		// Add a filter to validate the tokens with every request
@@ -82,7 +82,7 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
 		mailSender.setPort(587);
 
 		mailSender.setUsername("filmkritik.se@gmail.com");
-		mailSender.setPassword("sijvddqvkajbbtvi");
+		mailSender.setPassword("fbddyejhpwycafmo");
 
 		Properties props = mailSender.getJavaMailProperties();
 		props.put("mail.transport.protocol", "smtp");

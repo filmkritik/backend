@@ -114,6 +114,10 @@ public class AuthenticationController {
 		return ResponseEntity.ok(userDetailsService.sendSecurityCode(userId));
 	}
 
+	@PostMapping(value = "/forgot/updatePassword")
+	public  ResponseEntity<String> sendSecurityCode(@RequestParam long userId,@RequestParam String password ){	
+		return ResponseEntity.ok(userDetailsService.updatePassword(userId,password));
+	}
 
 	@PostMapping(value = "/refresh")
 	public ResponseEntity<JwtTokenResponse> refreshAndGetAuthenticationToken(@RequestBody TokenRefreshRequest request) {

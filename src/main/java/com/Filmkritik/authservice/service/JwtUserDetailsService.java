@@ -139,4 +139,19 @@ public class JwtUserDetailsService implements UserDetailsService {
 		        		+ "\\n Have a great life.\"");
 		        emailSender.send(message);
 		    }
+
+
+	public String updatePassword(long userId, String password) {
+		// TODO Auto-generated method stub
+		Optional<UserEntity> user = userRepo.findById(userId);
+		UserEntity upUser = new UserEntity();
+		upUser.setFirstname(user.get().getFirstname());
+		upUser.setLastname(user.get().getLastname());
+		upUser.setPhoneno(user.get().getPhoneno());
+		upUser.setId(user.get().getId());
+		upUser.setUsername(user.get().getUsername());
+		upUser.setPassword(password);
+		userRepo.save(upUser);
+		return "Success";
+	}
 }
