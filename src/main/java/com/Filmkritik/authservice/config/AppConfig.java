@@ -67,7 +67,7 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers("/authenticate", "/register", "/forgot/securityCode", "/movie/topRatedMovies",
 						"/movie/popularMovies", "/tv/topRatedTV", "/tv/popularTV", "/tv/airingToday",
-						"/movie/upcomingMovies", "/movie/nowShowing", "/swagger-ui/**", "/v3/api-docs/**",
+						"/movie/upcomingMovies", "/movie/nowShowing", "/getGenre","/getAllSecurityQuestions","/forgot/verifyUser","/securityCode","/swagger-ui/**", "/v3/api-docs/**",
 						"/user/securityQuestions/**,/forgot/updatePassword")
 				.permitAll().anyRequest().authenticated();
 
