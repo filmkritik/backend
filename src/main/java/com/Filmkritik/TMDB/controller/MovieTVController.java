@@ -8,10 +8,17 @@ import com.omertron.themoviedbapi.model.media.MediaBasic;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.model.person.PersonFind;
 import com.omertron.themoviedbapi.model.tv.TVBasic;
+
+
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Filmkritik.TMDB.services.MovieService;
@@ -19,7 +26,9 @@ import com.Filmkritik.TMDB.services.TvService;
 import com.Filmkritik.authservice.controller.AuthenticationController;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.Genre;
+import com.omertron.themoviedbapi.model.movie.MovieBasic;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
+import com.omertron.themoviedbapi.model.tv.TVBasic;
 import com.omertron.themoviedbapi.model.tv.TVInfo;
 import com.omertron.themoviedbapi.results.ResultList;
 
@@ -118,6 +127,27 @@ public class MovieTVController {
 	@GetMapping(value="/search/tv")
 	public ResultList<TVBasic> searchTV(String query, int pageNo, int firstDateYr, SearchType type) throws MovieDbException{
 		return tvService.searchTV(query, pageNo, firstDateYr, type);
+	}
+	
+	@GetMapping(value = "/getLikedTVShowsByUser")
+	public List<TVInfo> getLikedTV(@RequestParam long userId) throws MovieDbException{
+		return tvService.getLikedTV(userId);
+	}
+	
+	@GetMapping(value = "/getLikedMovieByUser")
+	public List<MovieInfo> getLikedMovie(@RequestParam long userId) throws MovieDbException{
+		return movieService.getLikedMovie(userId);
+	}
+	
+	@PostMapping(value = "/addLikedTVShowsByUser")
+	public ResponseEntity<String> addLikedTV(@RequestParam long userId, @RequestParam long tvId) throws MovieDbException{
+		return ResponseEntity.ok(tvService.addLikedTV(userId,tvId));
+	}
+	
+	@PostMapping(value = "/addLikedMovieByUser")
+	public ResponseEntity<String> addLikedMovie(@RequestParam long userId, @RequestParam long movieId) throws MovieDbException{
+		return ResponseEntity.ok(movieService.addLikedMovie(userId,movieId)) ;
+	
 	}
 	
 }
