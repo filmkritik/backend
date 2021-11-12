@@ -1,5 +1,13 @@
 package com.Filmkritik.TMDB.controller;
-
+import com.omertron.themoviedbapi.enumeration.SearchType;
+import com.omertron.themoviedbapi.model.collection.Collection;
+import com.omertron.themoviedbapi.model.company.Company;
+import com.omertron.themoviedbapi.model.keyword.Keyword;
+import com.omertron.themoviedbapi.model.list.UserList;
+import com.omertron.themoviedbapi.model.media.MediaBasic;
+import com.omertron.themoviedbapi.model.movie.MovieInfo;
+import com.omertron.themoviedbapi.model.person.PersonFind;
+import com.omertron.themoviedbapi.model.tv.TVBasic;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -72,4 +80,44 @@ public class MovieTVController {
 	public ResultList<Genre> getGenre() throws MovieDbException{
 		return movieService.getGenre();
 	}
+	
+	@GetMapping(value="/search/collection")
+	public ResultList<Collection> searchCollection(String query, int pageNo) throws MovieDbException{
+		return movieService.searchCollection(query, pageNo);
+	}
+	
+	@GetMapping(value="/search/company")
+	public ResultList<Company> searchCompany(String query, int pageNo) throws MovieDbException{
+		return movieService.searchCompany(query, pageNo);
+	}
+	
+	@GetMapping(value="/search/keyword")
+	public ResultList<Keyword> searchKeyword(String query, int pageNo) throws MovieDbException{
+		return movieService.searchKeyword(query, pageNo);
+	}
+	
+	public ResultList<UserList> searchList(String query, int pageNo, boolean includeAdult) throws MovieDbException{
+		return movieService.searchList(query, pageNo, includeAdult);
+	}
+	
+	@GetMapping(value="/search/movie")
+	public ResultList<MovieInfo> searchMovie(String query, int pageNo, boolean includeAdult,int searchYr,int releaseYr,SearchType type ) throws MovieDbException{
+		return movieService.searchMovie(query, pageNo, includeAdult,searchYr,releaseYr,type);
+	}
+	
+	@GetMapping(value="/search/multi")
+	public ResultList<MediaBasic> searchMulti(String query, int pageNo, boolean includeAdult) throws MovieDbException{
+		return movieService.searchMulti(query, pageNo, includeAdult);
+	}
+	
+	@GetMapping(value="/search/person")
+	public ResultList<PersonFind> searchPeople(String query, int pageNo, boolean includeAdult, SearchType type) throws MovieDbException{
+		return movieService.searchPeople(query, pageNo, includeAdult, type);
+	}
+	
+	@GetMapping(value="/search/tv")
+	public ResultList<TVBasic> searchTV(String query, int pageNo, int firstDateYr, SearchType type) throws MovieDbException{
+		return tvService.searchTV(query, pageNo, firstDateYr, type);
+	}
+	
 }

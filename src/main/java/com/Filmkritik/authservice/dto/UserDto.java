@@ -98,4 +98,6 @@ public class UserDto {
 	public void setSQ_A(Map<Integer, String> sQ_A) {
 		SQ_A = sQ_A;
 	}
+	
+
 }

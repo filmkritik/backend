@@ -83,6 +83,20 @@ public class JwtUserDetailsService implements UserDetailsService {
 		return "Success";
 	}
 	
+	
+	public String update(UserDto user) {
+		Long uID = getUserIdbyUsername(user.getEmail());
+		Optional<UserEntity> newUser = findByUserId(uID);
+		UserEntity obj_entity = newUser.stream().findFirst().get();
+		obj_entity.setUsername(user.getEmail());
+		obj_entity.setPassword(bcryptEncoder.encode(user.getPassword()));
+		obj_entity.setFirstname(user.getFirstname());
+		obj_entity.setLastname(user.getLastname());
+		obj_entity.setPhoneno(user.getPhonenumber());
+		userRepo.save(obj_entity);
+		return "Success";
+	}
+	
 	private void saveSecurityQ_AByUser(long userid, Map<Integer, String> sq_A) {
 		sq_A.forEach((qid,answer)->{
 			UserSecQuestMappingEntity newQA = new UserSecQuestMappingEntity();
