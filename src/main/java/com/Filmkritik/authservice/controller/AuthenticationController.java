@@ -105,6 +105,19 @@ public class AuthenticationController {
 		return ResponseEntity.ok(userDetailsService.getUserIdbyUsername(username));
 	}
 	
+	@GetMapping(value = "/login")
+	public  ResponseEntity<?> login(@RequestParam String username, @RequestParam String pwd) throws Exception{	
+		
+		UserDetails obj_User= userDetailsService.loadUserByUsername(username);
+		
+		if(obj_User.getPassword().equals(pwd))
+			return ResponseEntity.ok("success");
+		else
+			return ResponseEntity.ok("Error: No user found");
+		
+	}
+	
+	
 	@GetMapping(value = "/user/securityQuestions")
 	public Map<String, String> getSQbyUserId(@RequestParam long userId){
 		return  userDetailsService.getSQbyUserId(userId);
