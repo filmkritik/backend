@@ -107,14 +107,12 @@ public class AuthenticationController {
 	
 	@GetMapping(value = "/login")
 	public  ResponseEntity<?> login(@RequestParam String username, @RequestParam String pwd) throws Exception{	
-		
 		UserDetails obj_User= userDetailsService.loadUserByUsername(username);
 		
 		if(obj_User.getPassword().equals(pwd))
 			return ResponseEntity.ok("success");
 		else
-			return ResponseEntity.ok("Error: No user found");
-		
+			return ResponseEntity.ok("Error: No user found");	
 	}
 	
 	
