@@ -106,6 +106,8 @@ public class AuthenticationController {
 		return ResponseEntity.ok(userDetailsService.update(user));
 	}
 	
+
+
 	@GetMapping(value = "/forgot/verifyUser")
 	public  ResponseEntity<?> verifyUser(@RequestParam String username) throws UsernameNotFoundException{	
 		return ResponseEntity.ok(userDetailsService.getUserIdbyUsername(username));
