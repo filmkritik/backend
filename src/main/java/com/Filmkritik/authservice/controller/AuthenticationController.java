@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -108,8 +109,9 @@ public class AuthenticationController {
 	@GetMapping(value = "/login")
 	public  ResponseEntity<?> login(@RequestParam String username, @RequestParam String pwd) throws Exception{	
 		UserDetails obj_User= userDetailsService.loadUserByUsername(username);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();  
 		
-		if(obj_User.getPassword().equals(pwd))
+		if(encoder.matches(pwd, obj_User.getPassword()))  
 			return ResponseEntity.ok("success");
 		else
 			return ResponseEntity.ok("Error: No user found");	
