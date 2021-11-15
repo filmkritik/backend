@@ -95,12 +95,15 @@ public class AuthenticationController {
 		return ResponseEntity.ok(userDetailsService.save(user));
 	}
 	
+
 	@PostMapping(value = "/UpdateUser")
 	public ResponseEntity<?> UpdateUser(@RequestBody UserDto user) throws Exception {
 		logger.info("Requested to update user details: " + user.getEmail());
 		return ResponseEntity.ok(userDetailsService.update(user));
 	}
 	
+
+
 	@GetMapping(value = "/forgot/verifyUser")
 	public  ResponseEntity<?> verifyUser(@RequestParam String username) throws UsernameNotFoundException{	
 		return ResponseEntity.ok(userDetailsService.getUserIdbyUsername(username));
