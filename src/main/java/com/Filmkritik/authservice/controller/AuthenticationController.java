@@ -95,6 +95,11 @@ public class AuthenticationController {
 		return ResponseEntity.ok(userDetailsService.save(user));
 	}
 	
+	@PostMapping(value = "/getUserInfo")
+	public void GetUserInfo() throws Exception {
+		
+	}
+	
 	@PostMapping(value = "/UpdateUser")
 	public ResponseEntity<?> UpdateUser(@RequestBody UserDto user) throws Exception {
 		logger.info("Requested to update user details: " + user.getEmail());
@@ -117,6 +122,10 @@ public class AuthenticationController {
 			return ResponseEntity.ok("Error: No user found");	
 	}
 	
+	@GetMapping(value = "/getUserDetails")
+	public  ResponseEntity<?> getUserDetails(@RequestParam long userId) throws UsernameNotFoundException{	
+		return ResponseEntity.ok(userDetailsService.findByUserId(userId));
+	}
 	
 	@GetMapping(value = "/user/securityQuestions")
 	public Map<String, String> getSQbyUserId(@RequestParam long userId){
