@@ -61,17 +61,10 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		// We don't need CSRF for this example
 		httpSecurity.csrf().disable().exceptionHandling()
-				.authenticationEntryPoint(jwtUnAuthorizedResponseAuthenticationEntryPoint).and().sessionManagement()
-
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests().antMatchers("/**")
-
-				
-				.permitAll().anyRequest().authenticated();
-
-		// Add a filter to validate the tokens with every request
-		httpSecurity.addFilterBefore(jwtOncePerRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		.authenticationEntryPoint(jwtUnAuthorizedResponseAuthenticationEntryPoint).and().sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests().antMatchers("/**")
+		.permitAll().anyRequest().authenticated();
 	}
 
 	@Bean

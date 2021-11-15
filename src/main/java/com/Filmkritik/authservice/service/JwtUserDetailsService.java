@@ -73,12 +73,14 @@ public class JwtUserDetailsService implements UserDetailsService {
 //	}
 	
 	public String save(UserDto user) {
+		if(userRepo.findByUsername(user.getEmail()) != null)
+			return "User Already Present";
 		UserEntity newUser = new UserEntity();
 		newUser.setFirstname(user.getFirstname());
 		newUser.setLastname(user.getLastname());
 		newUser.setPhoneno(user.getPhonenumber());
 		newUser.setUsername(user.getEmail());
-		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+		newUser.setPassword((user.getPassword()));
 		UserEntity savedUser = userRepo.save(newUser);
 		saveSecurityQ_AByUser(savedUser.getId(),user.getSQ_A());
 		return "Success";
@@ -90,7 +92,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 		Optional<UserEntity> newUser = findByUserId(uID);
 		UserEntity obj_entity = newUser.stream().findFirst().get();
 		obj_entity.setUsername(user.getEmail());
-		obj_entity.setPassword(bcryptEncoder.encode(user.getPassword()));
+		obj_entity.setPassword((user.getPassword()));
 		obj_entity.setFirstname(user.getFirstname());
 		obj_entity.setLastname(user.getLastname());
 		obj_entity.setPhoneno(user.getPhonenumber());

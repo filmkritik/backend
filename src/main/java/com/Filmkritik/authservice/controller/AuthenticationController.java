@@ -38,9 +38,11 @@ import com.Filmkritik.authservice.dto.TokenRefreshRequest;
 import com.Filmkritik.authservice.dto.UserDto;
 import com.Filmkritik.authservice.entities.RefreshTokenEntity;
 import com.Filmkritik.authservice.entities.SecurityQuestionsEntity;
+import com.Filmkritik.authservice.entities.UserEntity;
 import com.Filmkritik.authservice.exception.AuthenticationException;
 import com.Filmkritik.authservice.exception.TokenRefreshException;
 import com.Filmkritik.authservice.repository.SecurityQuestionsRepository;
+import com.Filmkritik.authservice.repository.UserRepository;
 import com.Filmkritik.authservice.service.AuthService;
 import com.Filmkritik.authservice.service.JwtUserDetailsService;
 import com.Filmkritik.authservice.utilities.JwtTokenUtil;
@@ -69,6 +71,9 @@ public class AuthenticationController {
 
 	@Autowired
 	private AuthService authService;
+	
+	@Autowired
+	private UserRepository userRepo;
 
 	@PostMapping(value = "/authenticate")
 	public ResponseEntity<JwtTokenResponse> createAuthenticationToken(
@@ -115,10 +120,10 @@ public class AuthenticationController {
 	
 	@GetMapping(value = "/login")
 	public  ResponseEntity<?> login(@RequestParam String username, @RequestParam String pwd) throws Exception{	
-		UserDetails obj_User= userDetailsService.loadUserByUsername(username);
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();  
+		UserEntity obj_User= userRepo.findByUsername(username);
+		//BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();  
 		
-		if(encoder.matches(pwd, obj_User.getPassword()))  
+		if(pwd.equals(obj_User.getPassword()))
 			return ResponseEntity.ok("success");
 		else
 			return ResponseEntity.ok("Error: No user found");	
