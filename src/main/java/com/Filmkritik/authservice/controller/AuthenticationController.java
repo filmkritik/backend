@@ -119,14 +119,20 @@ public class AuthenticationController {
 	}
 	
 	@GetMapping(value = "/login")
-	public  ResponseEntity<?> login(@RequestParam String username, @RequestParam String pwd) throws Exception{	
-		UserEntity obj_User= userRepo.findByUsername(username);
-		//BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();  
-		
-		if(pwd.equals(obj_User.getPassword()))
-			return ResponseEntity.ok("success");
-		else
-			return ResponseEntity.ok("Error: No user found");	
+	public  ResponseEntity<?> login(@RequestParam String username, @RequestParam String pwd) throws Exception{
+		try {
+			UserEntity obj_User= userRepo.findByUsername(username);
+			//BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();  
+			
+			if(obj_User.getId() > 0 && pwd.equals(obj_User.getPassword()))
+				return ResponseEntity.ok(obj_User.getId()+"");
+			else 
+				return ResponseEntity.ok("Error: No user found");
+		}
+		catch(Exception e){
+			return ResponseEntity.ok("Error: No user found");
+		}
+			
 	}
 	
 	@GetMapping(value = "/getUserDetails")

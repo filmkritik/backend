@@ -80,10 +80,14 @@ public class JwtUserDetailsService implements UserDetailsService {
 		newUser.setLastname(user.getLastname());
 		newUser.setPhoneno(user.getPhonenumber());
 		newUser.setUsername(user.getEmail());
+
 		newUser.setPassword((user.getPassword()));
+
+		newUser.setPassword(user.getPassword());
+
 		UserEntity savedUser = userRepo.save(newUser);
 		saveSecurityQ_AByUser(savedUser.getId(),user.getSQ_A());
-		return "Success";
+		return savedUser.getId() + "";
 	}
 	
 	
@@ -92,7 +96,11 @@ public class JwtUserDetailsService implements UserDetailsService {
 		Optional<UserEntity> newUser = findByUserId(uID);
 		UserEntity obj_entity = newUser.stream().findFirst().get();
 		obj_entity.setUsername(user.getEmail());
+
 		obj_entity.setPassword((user.getPassword()));
+
+		obj_entity.setPassword(user.getPassword());
+
 		obj_entity.setFirstname(user.getFirstname());
 		obj_entity.setLastname(user.getLastname());
 		obj_entity.setPhoneno(user.getPhonenumber());
