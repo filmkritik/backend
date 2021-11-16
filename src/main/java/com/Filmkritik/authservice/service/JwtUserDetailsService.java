@@ -74,7 +74,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	
 	public String save(UserDto user) {
 		if(userRepo.findByUsername(user.getEmail()) != null)
-			return "User Already Present";
+			return "AlreadyPresent";
 		UserEntity newUser = new UserEntity();
 		newUser.setFirstname(user.getFirstname());
 		newUser.setLastname(user.getLastname());
